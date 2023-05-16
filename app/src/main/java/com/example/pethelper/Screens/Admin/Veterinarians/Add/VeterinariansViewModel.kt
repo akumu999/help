@@ -8,9 +8,13 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 data class Veterinarian(
+    val id: String,
     val name: String,
     val surname: String,
-    val midname: String
+    val midname: String,
+    val education: String,
+    val speciality: String,
+    val work_experience: String
 )
 
 class ProductsViewModel : ViewModel() {

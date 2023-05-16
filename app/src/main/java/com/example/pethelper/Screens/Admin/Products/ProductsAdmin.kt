@@ -17,8 +17,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pethelper.Navigation.NavScreens
 import com.example.pethelper.Screens.Admin.Products.Products
 import com.example.pethelper.Screens.Admin.Products.ProductsViewModel
-import com.example.pethelper.Screens.Admin.Veterinarian
-import com.example.pethelper.Screens.Admin.VeterinariansViewModel
 
 
 @Composable
@@ -52,14 +50,16 @@ fun ProductsAdmin(controller: NavController, viewModel: ProductsViewModel = view
 
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             items(products) { product ->
-                ProductsItem(product)
+                ProductsItem(product, onDeleteClick = {
+                    viewModel.deleteProduct(product)
+                })
             }
         }
     }
 }
 
 @Composable
-fun ProductsItem(products: Products) {
+fun ProductsItem(product: Products, onDeleteClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -70,25 +70,25 @@ fun ProductsItem(products: Products) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(modifier = Modifier.weight(1f)) {
-                Text(text = products.name, style = MaterialTheme.typography.h6)
+                Text(text = product.name, style = MaterialTheme.typography.h6)
             }
             IconButton(
-                onClick = { /* Handle edit veterinarian */ },
+                onClick = { /* Handle edit product */ },
                 modifier = Modifier.padding(end = 8.dp)
             ) {
                 Icon(
                     imageVector = Icons.Default.Edit,
-                    contentDescription = "Edit Veterinarian",
+                    contentDescription = "Edit Product",
                     tint = Color.Black
                 )
             }
             IconButton(
-                onClick = { /* Handle delete veterinarian */ },
+                onClick = onDeleteClick,
                 modifier = Modifier.padding(end = 8.dp)
             ) {
                 Icon(
                     imageVector = Icons.Default.Delete,
-                    contentDescription = "Delete Veterinarian",
+                    contentDescription = "Delete Product",
                     tint = Color.Black
                 )
             }

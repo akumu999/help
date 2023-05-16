@@ -24,7 +24,6 @@ fun ProductsAdd(navController: NavController, viewModel: ProductsViewModel = vie
     val productsCollection = firestore.collection("products")
 
     val productNameState = remember { mutableStateOf("") }
-    val productDescriptionState = remember { mutableStateOf("") }
     val productPriceState = remember { mutableStateOf("") }
 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {

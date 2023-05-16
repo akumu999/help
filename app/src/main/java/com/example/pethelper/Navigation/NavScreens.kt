@@ -19,4 +19,5 @@ sealed class NavScreens (val route: String){
     object UsersAdmin : NavScreens("UsersAdmin")
     object VeterinariansAdmin : NavScreens("VeterinarianAdmin")
     object ProductsAdd : NavScreens("ProductsAdd")
+    object VeterinariansAdd : NavScreens("VeterinariansAdd")
 }

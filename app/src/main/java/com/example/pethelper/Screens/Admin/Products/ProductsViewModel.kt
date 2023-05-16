@@ -32,12 +32,27 @@ class ProductsViewModel : ViewModel() {
                     val id = document.id
                     val name = document.getString("name") ?: ""
                     val cost = document.getString("cost") ?: ""
+                    // Остальные поля продукта
                     products.add(Products(id, name, cost))
                 }
                 _productsList.value = products
             }
             .addOnFailureListener { exception ->
                 // Handle error
+            }
+    }
+
+    fun deleteProduct(product: Products) {
+        firestore.collection("products")
+            .document(product.id)
+            .delete()
+            .addOnSuccessListener {
+                val updatedList = _productsList.value?.toMutableList()
+                updatedList?.remove(product)
+                _productsList.value = updatedList
+            }
+            .addOnFailureListener { exception ->
+                // Обработка ошибки при удалении
             }
     }
 }

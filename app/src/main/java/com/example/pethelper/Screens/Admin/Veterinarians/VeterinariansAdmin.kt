@@ -12,14 +12,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.pethelper.Screens.Admin.Veterinarian
-import com.example.pethelper.Screens.Admin.VeterinariansViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.pethelper.Navigation.NavScreens
+import com.example.pethelper.Screens.Admin.Products.Products
+import com.example.pethelper.Screens.Admin.Products.ProductsViewModel
+import com.example.pethelper.Screens.Admin.Products.Veterinarians
+import com.example.pethelper.Screens.Admin.Products.VeterinariansViewModel
 
 
 @Composable
-fun VeterinariansAdmin(navController: NavController, viewModel: VeterinariansViewModel = viewModel()) {
+fun VeterinariansAdmin(controller: NavController, viewModel: VeterinariansViewModel = viewModel()) {
     val veterinarians = viewModel.veterinariansList.value.orEmpty()
     Column(modifier = Modifier.fillMaxSize()) {
         Text(
@@ -30,7 +33,7 @@ fun VeterinariansAdmin(navController: NavController, viewModel: VeterinariansVie
         )
 
         Button(
-            onClick = { /* Handle add veterinarian */ },
+            onClick = { controller.navigate(NavScreens.VeterinariansAdd.route) },
             modifier = Modifier
                 .padding(horizontal = 16.dp, vertical = 8.dp)
                 .fillMaxWidth(),
@@ -43,15 +46,14 @@ fun VeterinariansAdmin(navController: NavController, viewModel: VeterinariansVie
                     tint = Color.White
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(text = "Добавить ветеринара", color = Color.White)
+                Text(text = "Добавить Ветеринара", color = Color.White)
             }
         }
 
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             items(veterinarians) { veterinarian ->
-                VeterinarianItem(veterinarian, onDeleteClick = {
+                VeterinariansItem(veterinarian, onDeleteClick = {
                     viewModel.deleteVeterinarian(veterinarian)
-                    viewModel.fetchVeterinarians() // Обновление списка после успешного удаления
                 })
             }
         }
@@ -59,7 +61,7 @@ fun VeterinariansAdmin(navController: NavController, viewModel: VeterinariansVie
 }
 
 @Composable
-fun VeterinarianItem(veterinarian: Veterinarian, onDeleteClick: () -> Unit) {
+fun VeterinariansItem(veterinarians: Veterinarians, onDeleteClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -70,15 +72,15 @@ fun VeterinarianItem(veterinarian: Veterinarian, onDeleteClick: () -> Unit) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(modifier = Modifier.weight(1f)) {
-                Text(text = veterinarian.name, style = MaterialTheme.typography.h6)
+                Text(text = veterinarians.name, style = MaterialTheme.typography.h6)
             }
             IconButton(
-                onClick = { /* Handle edit veterinarian */ },
+                onClick = { /* Handle edit product */ },
                 modifier = Modifier.padding(end = 8.dp)
             ) {
                 Icon(
                     imageVector = Icons.Default.Edit,
-                    contentDescription = "Edit Veterinarian",
+                    contentDescription = "Edit Product",
                     tint = Color.Black
                 )
             }
@@ -88,7 +90,7 @@ fun VeterinarianItem(veterinarian: Veterinarian, onDeleteClick: () -> Unit) {
             ) {
                 Icon(
                     imageVector = Icons.Default.Delete,
-                    contentDescription = "Delete Veterinarian",
+                    contentDescription = "Delete Product",
                     tint = Color.Black
                 )
             }

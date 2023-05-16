@@ -15,6 +15,7 @@ import com.example.pethelper.Screens.*
 import com.example.pethelper.Screens.Admin.AdminMainScreen
 import com.example.pethelper.Screens.Admin.Products.ProductsAdd
 import com.example.pethelper.Screens.Admin.UsersAdmin
+import com.example.pethelper.Screens.Admin.Veterinarians.Add.VeterinariansAdd
 import com.example.pethelper.Screens.Catalog.ProductInfo
 import com.example.pethelper.Screens.Doctors.Veterinarian
 import com.example.pethelper.Screens.Login.LoginViewModel
@@ -77,6 +78,9 @@ fun SetNavController(controller: NavHostController, context : Context) {
         }
         composable(NavScreens.ProductsAdd.route) {
             ProductsAdd(controller)
+        }
+        composable(NavScreens.VeterinariansAdd.route) {
+            VeterinariansAdd(controller)
         }
     }
 }

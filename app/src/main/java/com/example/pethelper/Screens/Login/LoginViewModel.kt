@@ -16,6 +16,7 @@ import com.google.firebase.ktx.Firebase
 class LoginViewModel : ViewModel() {
 
     val isAdmin = mutableStateOf(false)
+    val isVet = mutableStateOf(false)
 
     private val _email = MutableLiveData("")
     val email: LiveData<String> = _email
@@ -49,9 +50,16 @@ class LoginViewModel : ViewModel() {
                             if (document != null) {
                                 val isAdminValue = document.getBoolean("isAdmin") ?: false
                                 isAdmin.value = isAdminValue
+
+                                val isVetValue = document.getBoolean("isVet") ?: false
+                                isVet.value = isVetValue
                                 if (isAdminValue) {
                                     controller.navigate(NavScreens.AdminMainScreen.route)
-                                } else {
+                                }
+                                else if(isVetValue){
+                                    controller.navigate(NavScreens.VScreen.route)
+                                }
+                                else {
                                     controller.navigate(NavScreens.DoctorScreen.route)
                                 }
                             } else {

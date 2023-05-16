@@ -48,6 +48,7 @@ fun LoginScreen(
     var age by remember { mutableStateOf("") }
     var bio by remember { mutableStateOf("") }
     var isAdmin by remember { mutableStateOf<Boolean?>(null) }
+    var isVet by remember { mutableStateOf<Boolean?>(null) }
 
     LaunchedEffect(user) {
         userRef.get().addOnSuccessListener { document ->
@@ -57,6 +58,7 @@ fun LoginScreen(
                 age = document.getString("age") ?: ""
                 bio = document.getString("bio") ?: ""
                 isAdmin = document.getBoolean("isAdmin") ?: false
+                isVet = document.getBoolean("isAdmin") ?: false
             }
         }
     }

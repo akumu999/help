@@ -1,9 +1,11 @@
 package com.example.pethelper.Navigation
 
+import DoctorPost
 import Pet
 import PetProfile
 import PetsAddScreen
 import ProductsAdmin
+import VScreen
 import VeterinariansAdmin
 import android.content.Context
 import androidx.compose.runtime.Composable
@@ -14,7 +16,6 @@ import androidx.navigation.NavHostController
 import com.example.pethelper.Screens.*
 import com.example.pethelper.Screens.Admin.AdminMainScreen
 import com.example.pethelper.Screens.Admin.Products.ProductsAdd
-import com.example.pethelper.Screens.Admin.UsersAdmin
 import com.example.pethelper.Screens.Admin.Veterinarians.Add.VeterinariansAdd
 import com.example.pethelper.Screens.Catalog.ProductInfo
 import com.example.pethelper.Screens.Doctors.Veterinarian
@@ -70,9 +71,6 @@ fun SetNavController(controller: NavHostController, context : Context) {
         composable(NavScreens.ProductsAdmin.route) {
             ProductsAdmin(controller)
         }
-        composable(NavScreens.UsersAdmin.route) {
-            UsersAdmin()
-        }
         composable(NavScreens.VeterinariansAdmin.route) {
             VeterinariansAdmin(controller)
         }
@@ -81,6 +79,12 @@ fun SetNavController(controller: NavHostController, context : Context) {
         }
         composable(NavScreens.VeterinariansAdd.route) {
             VeterinariansAdd(controller)
+        }
+        composable(NavScreens.VScreen.route) {
+            VScreen(controller)
+        }
+        composable(NavScreens.DoctorPost.route) {
+            DoctorPost(controller)
         }
     }
 }

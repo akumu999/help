@@ -46,6 +46,7 @@ fun RegisterScreen(
     var age by remember { mutableStateOf("") }
     var bio by remember { mutableStateOf("") }
     var isAdmin by remember { mutableStateOf(false) }
+    var isVet by remember { mutableStateOf(false) }
 
     LaunchedEffect(user) {
         userRef.get().addOnSuccessListener { document ->
@@ -55,6 +56,7 @@ fun RegisterScreen(
                 age = document.getString("age") ?: ""
                 bio = document.getString("bio") ?: ""
                 isAdmin = document.getBoolean("isAdmin") ?: false
+                isVet = document.getBoolean("isVet") ?: false
             }
         }
     }
@@ -160,7 +162,7 @@ fun RegisterScreen(
 
         Button(
             onClick = {
-                viewModel.register(name, surname, age, bio, isAdmin) {
+                viewModel.register(name, surname, age, bio, isAdmin, isVet) {
                     controller.navigate(NavScreens.DoctorScreen.route)
                 }
             },

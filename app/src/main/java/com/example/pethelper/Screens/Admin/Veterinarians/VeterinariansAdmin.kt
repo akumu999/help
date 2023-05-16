@@ -72,7 +72,10 @@ fun VeterinariansItem(veterinarians: Veterinarians, onDeleteClick: () -> Unit) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(modifier = Modifier.weight(1f)) {
-                Text(text = veterinarians.name, style = MaterialTheme.typography.h6)
+                Text(text = veterinarians.surname + " " + veterinarians.name + " " + veterinarians.midname + "\n", fontWeight = FontWeight.Bold)
+                Text(text = "Специальность:\n"+veterinarians.speciality+ "\n")
+                Text(text = "Образование:\n"+veterinarians.education+ "\n")
+                Text(text = "Опыт работы:\n"+veterinarians.work_experience+ "\n")
             }
             IconButton(
                 onClick = { /* Handle edit product */ },

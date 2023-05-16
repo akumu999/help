@@ -38,6 +38,7 @@ import kotlinx.coroutines.tasks.await
 @Composable
 fun DoctorScreen(controller: NavController) {
 
+
     val db = FirebaseFirestore.getInstance()
     val user = FirebaseAuth.getInstance().currentUser
 
@@ -111,11 +112,21 @@ fun DoctorScreen(controller: NavController) {
                 )
             }
         )
-
+        Button(
+            onClick = {
+                // Действия при нажатии кнопки записи на прием
+                // Например, переход к экрану записи на прием
+                controller.navigate(NavScreens.DoctorPost.route)
+            },
+            modifier = Modifier
+                .fillMaxWidth().background(Bisque2)
+        ) {
+            Text(text = "Записаться на прием")
+        }
         // Отображаем список Ветеринаров в LazyColumn
         LazyColumn(modifier = Modifier
             .fillMaxSize()
-            .background(Bisque2)) {
+            .background(Bisque2).padding(bottom = 60.dp)) {
             items(filteredVeterinarian) { veterinarian ->
                 Card(
                     modifier = Modifier

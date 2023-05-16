@@ -37,6 +37,7 @@ class RegisterViewModel : ViewModel() {
         age: String,
         bio: String,
         isAdmin: Boolean,
+        isVet: Boolean,
         navigateToDoctorScreen: () -> Unit // Функция для перехода на экран DoctorScreen
     ) {
         val email = email.value ?: return
@@ -57,7 +58,8 @@ class RegisterViewModel : ViewModel() {
                             "age" to age,
                             "bio" to bio,
                             "updatedAt" to FieldValue.serverTimestamp(),
-                            "isAdmin" to false
+                            "isAdmin" to false,
+                            "isVet" to false
                         )
 
                         userRef.set(data)

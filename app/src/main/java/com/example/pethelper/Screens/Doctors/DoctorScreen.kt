@@ -119,9 +119,10 @@ fun DoctorScreen(controller: NavController) {
                 controller.navigate(NavScreens.DoctorPost.route)
             },
             modifier = Modifier
-                .fillMaxWidth().background(Bisque2)
+                .fillMaxWidth().background(Bisque2),
+            colors = ButtonDefaults.buttonColors(backgroundColor = Bisque4), elevation = ButtonDefaults.elevation(defaultElevation = 8.dp, pressedElevation = 16.dp)
         ) {
-            Text(text = "Записаться на прием")
+            Text(text = "Записаться на прием", color = Color.White)
         }
         // Отображаем список Ветеринаров в LazyColumn
         LazyColumn(modifier = Modifier

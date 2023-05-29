@@ -1,9 +1,12 @@
 package com.example.pethelper.Navigation
 
 import DoctorPost
+import EditProductScreen
+import History
 import Pet
 import PetProfile
 import PetsAddScreen
+import Post
 import ProductsAdmin
 import VScreen
 import VeterinariansAdmin
@@ -16,6 +19,7 @@ import androidx.navigation.NavHostController
 import com.example.pethelper.Screens.*
 import com.example.pethelper.Screens.Admin.AdminMainScreen
 import com.example.pethelper.Screens.Admin.Products.ProductsAdd
+import com.example.pethelper.Screens.Admin.Veterinarians.Add.EditVeterinarianScreen
 import com.example.pethelper.Screens.Admin.Veterinarians.Add.VeterinariansAdd
 import com.example.pethelper.Screens.Catalog.ProductInfo
 import com.example.pethelper.Screens.Doctors.Veterinarian
@@ -85,6 +89,15 @@ fun SetNavController(controller: NavHostController, context : Context) {
         }
         composable(NavScreens.DoctorPost.route) {
             DoctorPost(controller)
+        }
+        composable(NavScreens.EditProductScreen.route + "/{product.id}") { backStackEntry ->
+            EditProductScreen(productId = backStackEntry.arguments?.getString("product.id") ?: "", controller = controller)
+        }
+        composable(NavScreens.EditVeterinarianScreen.route + "/{veterinarian.id}") { backStackEntry ->
+            EditVeterinarianScreen(veterinarianID = backStackEntry.arguments?.getString("veterinarian.id") ?: "", controller = controller)
+        }
+        composable(NavScreens.History.route) {
+            History(controller)
         }
     }
 }

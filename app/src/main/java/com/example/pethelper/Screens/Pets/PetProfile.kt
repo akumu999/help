@@ -3,13 +3,12 @@ import Pet
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.pethelper.Navigation.NavScreens
@@ -66,37 +65,72 @@ fun PetProfile(petId: String, controller: NavController) {
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(bottom = 16.dp)
         )
-        TextField(
+        OutlinedTextField(
             value = name,
-            onValueChange = { name = it },
-            label = { Text("Имя") },
-            modifier = Modifier.padding(bottom = 8.dp)
+            onValueChange = { newValue ->
+                if (newValue.all { it.isLetter() }) {
+                    name = newValue
+                }
+            },
+            label = { Text(text = "Имя питомца") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
         )
-        TextField(
+        OutlinedTextField(
             value = type,
-            onValueChange = { type = it },
-            label = { Text("Вид") },
-            modifier = Modifier.padding(bottom = 8.dp)
+            onValueChange = { newValue ->
+                if (newValue.all { it.isLetter() }) {
+                    type = newValue
+                }
+            },
+            label = { Text(text = "Вид") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
         )
-        TextField(
+        OutlinedTextField(
             value = breed,
-            onValueChange = { breed = it },
-            label = { Text("Порода") },
-            modifier = Modifier.padding(bottom = 8.dp)
+            onValueChange = { newValue ->
+                if (newValue.all { it.isLetter() }) {
+                    breed = newValue
+                }
+            },
+            label = { Text(text = "Порода") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
         )
-        TextField(
+        OutlinedTextField(
             value = gender,
-            onValueChange = { gender = it },
-            label = { Text("Пол") },
-            modifier = Modifier.padding(bottom = 8.dp)
+            onValueChange = { newValue ->
+                if (newValue.all { it.isLetter() }) {
+                    gender = newValue
+                }
+            },
+            label = { Text(text = "Пол") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
         )
-        TextField(
+        OutlinedTextField(
             value = age,
-            onValueChange = { age = it },
-            label = { Text("Возраст") },
-            modifier = Modifier.padding(bottom = 8.dp)
+            onValueChange = { newValue ->
+                if (newValue.all { it.isDigit() }) {
+                    age = newValue
+                }
+            },
+            label = { Text(text = "Возраст") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
         )
-        TextField(
+        OutlinedTextField(
             value = description,
             onValueChange = { description = it },
             label = { Text("Описание") },

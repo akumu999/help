@@ -1,14 +1,12 @@
 package com.example.pethelper.Screens.Admin.Veterinarians.Add
 
+import androidx.compose.foundation.background
 import com.example.pethelper.Screens.Admin.Products.ProductsViewModel
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -18,14 +16,17 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.pethelper.Screens.Admin.Products.Add.Product
 import com.example.pethelper.Screens.Admin.Products.VeterinariansViewModel
+import com.example.pethelper.ui.theme.Bisque2
+import com.example.pethelper.ui.theme.Bisque4
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.*
 
 @Composable
 fun VeterinariansAdd(navController: NavController, viewModel: VeterinariansViewModel = viewModel()) {
     val firestore = FirebaseFirestore.getInstance()
     val veterinarianCollection = firestore.collection("veterinarians")
 
-    val id = remember { mutableStateOf("") }
+    val id = remember { mutableStateOf(UUID.randomUUID().toString()) }
     val name = remember { mutableStateOf("") }
     val surname = remember { mutableStateOf("") }
     val midname = remember { mutableStateOf("") }
@@ -33,7 +34,7 @@ fun VeterinariansAdd(navController: NavController, viewModel: VeterinariansViewM
     val speciality = remember { mutableStateOf("") }
     val work_experience = remember { mutableStateOf("") }
 
-    Column(modifier = Modifier
+    Column(modifier = Modifier.background(Bisque2)
         .fillMaxSize()
         .padding(16.dp)) {
         Text(
@@ -98,7 +99,8 @@ fun VeterinariansAdd(navController: NavController, viewModel: VeterinariansViewM
                 .padding(bottom = 16.dp)
         )
 
-        Button(
+        Button(colors = ButtonDefaults.buttonColors(backgroundColor = Bisque4),
+            elevation = ButtonDefaults.elevation(defaultElevation = 8.dp, pressedElevation = 16.dp),
             onClick = {
                 val id = id.value
                 val name = name.value

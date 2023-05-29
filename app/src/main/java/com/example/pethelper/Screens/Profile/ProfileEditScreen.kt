@@ -51,40 +51,52 @@ fun ProfileEditScreen(controller: NavController) {
                 contentDescription = "Back button"
             )
         }
-        TextField(
+        OutlinedTextField(
             value = name,
-            onValueChange = {name = it},
-            label = {Text(text="Name")},
+            onValueChange = { newValue ->
+                if (newValue.all { it.isLetter() }) {
+                    name = newValue
+                }
+            },
+            label = { Text(text = "Имя") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+                .padding(16.dp)
         )
 
-        TextField(
+        OutlinedTextField(
             value = surname,
-            onValueChange = {surname = it},
-            label = {Text(text="Surame")},
+            onValueChange = { newValue ->
+                if (newValue.all { it.isLetter() }) {
+                    surname = newValue
+                }
+            },
+            label = { Text(text = "Фамилия") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+                .padding(16.dp)
         )
 
-        TextField(
+        OutlinedTextField(
             value = age,
-            onValueChange = { age = it },
-            label = { Text(text = "Age") },
+            onValueChange = { newValue ->
+                if (newValue.all { it.isDigit() }) {
+                    age = newValue
+                }
+            },
+            label = { Text(text = "Возраст") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(16.dp)
         )
 
-        TextField(
+        OutlinedTextField(
             value = bio,
             onValueChange = { bio = it },
-            label = { Text(text = "Bio") },
+            label = { Text(text = "Информация о себе") },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)

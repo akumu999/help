@@ -17,51 +17,76 @@ import com.google.firebase.ktx.Firebase
 fun DoctorPost(controller: NavController) {
     val db = Firebase.firestore
     val user = remember { FirebaseAuth.getInstance().currentUser }
-    val petRef = db.collection("posts")
+    val postRef = db.collection("posts")
 
+    var id by remember { mutableStateOf("") }
+    var petType by remember { mutableStateOf("") }
     var petName by remember { mutableStateOf("") }
     var ownerName by remember { mutableStateOf("") }
     var report by remember { mutableStateOf("") }
-    var petType by remember { mutableStateOf("") }
     var phone by remember { mutableStateOf("") }
+    var status by remember { mutableStateOf("") }
 
-    Column(modifier = Modifier.background(Bisque2).fillMaxSize().padding(16.dp)) {
+    Column(modifier = Modifier
+        .background(Bisque2)
+        .fillMaxSize()
+        .padding(16.dp)) {
         OutlinedTextField(
             value = petType,
-            onValueChange = { petType = it },
+            onValueChange = { newValue ->
+                if (newValue.matches(Regex("^[a-zA-Zа-яА-Я]+$"))) {
+                    petType = newValue
+                }
+            },
             label = { Text("Вид питомца") },
             modifier = Modifier.fillMaxWidth()
         )
         OutlinedTextField(
             value = petName,
-            onValueChange = { petName = it },
+            onValueChange = { newValue ->
+                if (newValue.matches(Regex("^[a-zA-Zа-яА-Я]+$"))) {
+                    petName = newValue
+                }
+            },
             label = { Text("Имя питомца") },
             modifier = Modifier.fillMaxWidth()
         )
         OutlinedTextField(
             value = ownerName,
-            onValueChange = { ownerName = it },
+            onValueChange = { newValue ->
+                if (newValue.matches(Regex("^[a-zA-Zа-яА-Я]+$"))) {
+                    ownerName = newValue
+                }
+            },
             label = { Text("Ваше имя") },
-            modifier = Modifier.fillMaxWidth().padding(top = 16.dp)
+            modifier = Modifier.fillMaxWidth()
         )
         OutlinedTextField(
             value = report,
             onValueChange = { report = it },
             label = { Text("Жалобы") },
-            modifier = Modifier.fillMaxWidth().padding(top = 16.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp)
         )
         OutlinedTextField(
             value = phone,
-            onValueChange = { phone = it },
+            onValueChange = { newValue ->
+                if (newValue.matches(Regex("^\\+?[1-9]\\d{0,2}[-.\\s]?\\(?\\d{3}\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{4}$"))) {
+                    phone = newValue
+                }
+            },
             label = { Text("Ваш номер телефона") },
-            modifier = Modifier.fillMaxWidth().padding(top = 16.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp)
         )
 
         Button( colors = ButtonDefaults.buttonColors(backgroundColor = Bisque4), elevation = ButtonDefaults.elevation(defaultElevation = 8.dp, pressedElevation = 16.dp),
             onClick = {
-                val post = Post(petType, petName, petName, ownerName, report, phone)
-                val postRef = petRef.document()
-                val postId = petRef.id // Получаем новый ID для документа питомца
+                val post = Post(id, petType, petName, ownerName, report, phone, status)
+                val postRef = postRef.document()
+                val postId = postRef.id // Получаем новый ID для документа питомца
                 postRef.set(post.copy(id = postId)) // Сохраняем данные питомца в Firestore
                 controller.popBackStack() // Возвращаемся к предыдущему экрану
             },
@@ -70,7 +95,7 @@ fun DoctorPost(controller: NavController) {
                 .fillMaxWidth()
                 .padding(top = 16.dp)
         ) {
-            Text("Добавить питомца", color = Color.White)
+            Text("Отправить заявку на прием", color = Color.White)
         }
     }
 }
@@ -81,5 +106,6 @@ data class Post(
     val petName: String = "",
     val ownerName: String = "",
     val report: String = "",
-    val phone: String = ""
+    val phone: String = "",
+    var status: String = ""
 )

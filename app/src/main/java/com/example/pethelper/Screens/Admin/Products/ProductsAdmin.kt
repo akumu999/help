@@ -1,3 +1,4 @@
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -7,6 +8,8 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -17,17 +20,21 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pethelper.Navigation.NavScreens
 import com.example.pethelper.Screens.Admin.Products.Products
 import com.example.pethelper.Screens.Admin.Products.ProductsViewModel
+import com.example.pethelper.ui.theme.Bisque2
+import com.example.pethelper.ui.theme.Bisque4
 
 
 @Composable
 fun ProductsAdmin(controller: NavController, viewModel: ProductsViewModel = viewModel()) {
     val products = viewModel.productsList.value.orEmpty()
-    Column(modifier = Modifier.fillMaxSize()) {
+
+    Column(modifier = Modifier.background(Bisque2).fillMaxSize()) {
         Text(
             text = "Список услуг",
             style = MaterialTheme.typography.h5,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(16.dp),
+            color = Color.Black
         )
 
         Button(
@@ -35,7 +42,7 @@ fun ProductsAdmin(controller: NavController, viewModel: ProductsViewModel = view
             modifier = Modifier
                 .padding(horizontal = 16.dp, vertical = 8.dp)
                 .fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Green)
+            colors = ButtonDefaults.buttonColors(backgroundColor = Bisque4)
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
@@ -50,16 +57,18 @@ fun ProductsAdmin(controller: NavController, viewModel: ProductsViewModel = view
 
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             items(products) { product ->
-                ProductsItem(product, onDeleteClick = {
-                    viewModel.deleteProduct(product)
-                })
+                ProductsItem(
+                    product = product,
+                    onDeleteClick = { viewModel.deleteProduct(product) },
+                    onEditClick = { controller.navigate("${NavScreens.EditProductScreen.route}/${product.id}") }
+                )
             }
         }
     }
 }
 
 @Composable
-fun ProductsItem(product: Products, onDeleteClick: () -> Unit) {
+fun ProductsItem(product: Products, onDeleteClick: () -> Unit, onEditClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -73,7 +82,7 @@ fun ProductsItem(product: Products, onDeleteClick: () -> Unit) {
                 Text(text = product.name, style = MaterialTheme.typography.h6)
             }
             IconButton(
-                onClick = { /* Handle edit product */ },
+                onClick = { onEditClick() },
                 modifier = Modifier.padding(end = 8.dp)
             ) {
                 Icon(

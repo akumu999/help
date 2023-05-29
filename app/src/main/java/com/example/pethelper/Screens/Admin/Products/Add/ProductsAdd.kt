@@ -1,21 +1,22 @@
 package com.example.pethelper.Screens.Admin.Products
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.pethelper.Screens.Admin.Products.Add.Product
+import com.example.pethelper.ui.theme.Bisque2
+import com.example.pethelper.ui.theme.Bisque4
 import com.google.firebase.firestore.FirebaseFirestore
 
 @Composable
@@ -26,7 +27,7 @@ fun ProductsAdd(navController: NavController, viewModel: ProductsViewModel = vie
     val productNameState = remember { mutableStateOf("") }
     val productPriceState = remember { mutableStateOf("") }
 
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+    Column(modifier = Modifier.background(Bisque2).fillMaxSize().padding(16.dp)) {
         Text(
             text = "Добавить услугу",
             style = MaterialTheme.typography.h5,
@@ -48,7 +49,8 @@ fun ProductsAdd(navController: NavController, viewModel: ProductsViewModel = vie
             modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
         )
 
-        Button(
+        Button(colors = ButtonDefaults.buttonColors(backgroundColor = Bisque4),
+            elevation = ButtonDefaults.elevation(defaultElevation = 8.dp, pressedElevation = 16.dp),
             onClick = {
                 val name = productNameState.value
                 val cost = productPriceState.value
@@ -67,7 +69,7 @@ fun ProductsAdd(navController: NavController, viewModel: ProductsViewModel = vie
             },
             modifier = Modifier.fillMaxWidth(),
         ) {
-            Text(text = "Добавить")
+            Text(text = "Добавить", color = Color.White)
         }
     }
 }

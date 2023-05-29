@@ -1,9 +1,11 @@
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.pethelper.ui.theme.Bisque2
@@ -18,6 +20,7 @@ fun PetsAddScreen(controller: NavController) {
     val user = remember { FirebaseAuth.getInstance().currentUser }
     val petRef = db.collection("users").document(user!!.uid).collection("pets")
 
+    var id by remember { mutableStateOf("") }
     var type by remember { mutableStateOf("") }
     var name by remember { mutableStateOf("") }
     var breed by remember { mutableStateOf("") }
@@ -25,52 +28,89 @@ fun PetsAddScreen(controller: NavController) {
     var gender by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
 
-    Column(modifier = Modifier.background(Bisque2).fillMaxSize().padding(16.dp)) {
-        OutlinedTextField(
-            value = type,
-            onValueChange = { type = it },
-            label = { Text("Вид") },
-            modifier = Modifier.fillMaxWidth()
-        )
+    Column(modifier = Modifier
+        .background(Bisque2)
+        .fillMaxSize()
+        .padding(16.dp)) {
         OutlinedTextField(
             value = name,
-            onValueChange = { name = it },
-            label = { Text("Имя") },
-            modifier = Modifier.fillMaxWidth()
+            onValueChange = { newValue ->
+                if (newValue.all { it.isLetter() }) {
+                    name = newValue
+                }
+            },
+            label = { Text(text = "Имя питомца") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
         )
         OutlinedTextField(
+            value = type,
+            onValueChange = { newValue ->
+                if (newValue.all { it.isLetter() }) {
+                    type = newValue
+                }
+            },
+            label = { Text(text = "Вид") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        )
+
+        OutlinedTextField(
             value = breed,
-            onValueChange = { breed = it },
-            label = { Text("Порода") },
-            modifier = Modifier.fillMaxWidth().padding(top = 16.dp)
+            onValueChange = { newValue ->
+                if (newValue.all { it.isLetter() }) {
+                    breed = newValue
+                }
+            },
+            label = { Text(text = "Порода") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        )
+        OutlinedTextField(
+                value = gender,
+        onValueChange = { gender = it },
+        label = { Text("Пол") },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 16.dp)
         )
         OutlinedTextField(
             value = age,
-            onValueChange = { age = it },
-            label = { Text("Возраст") },
-            modifier = Modifier.fillMaxWidth().padding(top = 16.dp)
+            onValueChange = { newValue ->
+                if (newValue.all { it.isDigit() }) {
+                    age = newValue
+                }
+            },
+            label = { Text(text = "Age") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
         )
-        OutlinedTextField(
-            value = gender,
-            onValueChange = { gender = it },
-            label = { Text("Пол") },
-            modifier = Modifier.fillMaxWidth().padding(top = 16.dp)
-        )
+
         OutlinedTextField(
             value = description,
             onValueChange = { description = it },
             label = { Text("Описание") },
-            modifier = Modifier.fillMaxWidth().padding(top = 16.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp)
         )
-        Button( colors = ButtonDefaults.buttonColors(backgroundColor = Bisque4), elevation = ButtonDefaults.elevation(defaultElevation = 8.dp, pressedElevation = 16.dp),
+        Button(
+            colors = ButtonDefaults.buttonColors(backgroundColor = Bisque4),
+            elevation = ButtonDefaults.elevation(defaultElevation = 8.dp, pressedElevation = 16.dp),
             onClick = {
-                val pet = Pet(name, type, breed, age, gender, description)
-                val petRef = petRef.document()
-                val petId = petRef.id // Получаем новый ID для документа питомца
-                petRef.set(pet.copy(id = petId)) // Сохраняем данные питомца в Firestore
+                val pet = Pet(id, name, type, breed, age, gender, description)
+                val petId = petRef.document().id // Получаем новый ID для нового документа питомца
+                petRef.document(petId).set(pet.copy(id = petId)) // Сохраняем данные питомца в новом документе в Firestore
                 controller.popBackStack() // Возвращаемся к предыдущему экрану
             },
-
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp)

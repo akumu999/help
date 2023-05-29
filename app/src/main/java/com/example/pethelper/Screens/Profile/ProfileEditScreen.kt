@@ -31,6 +31,8 @@ fun ProfileEditScreen(controller: NavController) {
     var surname by remember { mutableStateOf("")}
     var age by remember { mutableStateOf("") }
     var bio by remember { mutableStateOf("") }
+    var isAdmin by remember { mutableStateOf(false) }
+    var isVet by remember { mutableStateOf(false) }
 
     LaunchedEffect(user) {
         userRef.get().addOnSuccessListener { document ->
@@ -108,6 +110,8 @@ fun ProfileEditScreen(controller: NavController) {
             "surname" to surname,
             "age" to age,
             "bio" to bio,
+            "isAdmin" to isAdmin,
+            "isVet" to isVet,
             "updatedAt" to FieldValue.serverTimestamp()
         )
 

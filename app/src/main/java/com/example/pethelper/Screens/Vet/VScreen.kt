@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color.Companion.Green
 import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.pethelper.Navigation.NavScreens
 import com.google.firebase.firestore.FirebaseFirestore
@@ -23,6 +24,8 @@ import com.google.firebase.firestore.ktx.toObjects
 import kotlinx.coroutines.tasks.await
 import com.example.pethelper.ui.theme.Bisque2
 import com.example.pethelper.ui.theme.Bisque4
+import com.example.pethelper.ui.theme.GreenButton
+import com.example.pethelper.ui.theme.RedButton
 
 @Composable
 fun VScreen(controller: NavController) {
@@ -67,7 +70,7 @@ fun VScreen(controller: NavController) {
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            Text(text = "История заявок", color = Color.White)
+            Text(text = "История заявок", color = Color.White, fontSize = 20.sp)
         }
 
         // Отображаем список необработанных постов в LazyColumn
@@ -105,14 +108,14 @@ fun VScreen(controller: NavController) {
                                 )
                             } else {
                                 // Заявка не обработана, отображаем кнопки принятия и отклонения
-                                Button(colors = ButtonDefaults.buttonColors(backgroundColor = Color.Green), elevation = ButtonDefaults.elevation(defaultElevation = 8.dp, pressedElevation = 16.dp),
+                                Button(colors = ButtonDefaults.buttonColors(backgroundColor = GreenButton), elevation = ButtonDefaults.elevation(defaultElevation = 8.dp, pressedElevation = 16.dp),
                                     onClick = { acceptPost(post) },
                                     modifier = Modifier.fillMaxWidth()
                                 ) {
                                     Text(text = "Принять", color = Color.White)
                                 }
 
-                                Button(colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red), elevation = ButtonDefaults.elevation(defaultElevation = 8.dp, pressedElevation = 16.dp),
+                                Button(colors = ButtonDefaults.buttonColors(backgroundColor = RedButton), elevation = ButtonDefaults.elevation(defaultElevation = 8.dp, pressedElevation = 16.dp),
                                     onClick = { declinePost(post) },
                                     modifier = Modifier.fillMaxWidth()
                                 ) {

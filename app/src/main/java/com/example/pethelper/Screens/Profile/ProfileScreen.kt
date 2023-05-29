@@ -28,6 +28,7 @@ import com.example.pethelper.R
 import com.example.pethelper.ui.theme.Bisque1
 import com.example.pethelper.ui.theme.Bisque2
 import com.example.pethelper.ui.theme.Bisque4
+import com.example.pethelper.ui.theme.GreenButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
@@ -90,7 +91,7 @@ fun ProfileScreen(controller: NavController) {
                     tint = Color.White,
                     modifier = Modifier
                         .size(400.dp)
-                        .background(Color.Green)
+                        .background(GreenButton)
                 )
             }
         }

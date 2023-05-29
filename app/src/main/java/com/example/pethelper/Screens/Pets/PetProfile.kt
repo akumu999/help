@@ -14,6 +14,7 @@ import androidx.navigation.NavController
 import com.example.pethelper.Navigation.NavScreens
 import com.example.pethelper.ui.theme.Bisque2
 import com.example.pethelper.ui.theme.Bisque4
+import com.example.pethelper.ui.theme.RedButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -76,7 +77,7 @@ fun PetProfile(petId: String, controller: NavController) {
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(8.dp)
         )
         OutlinedTextField(
             value = type,
@@ -89,7 +90,7 @@ fun PetProfile(petId: String, controller: NavController) {
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(8.dp)
         )
         OutlinedTextField(
             value = breed,
@@ -102,7 +103,7 @@ fun PetProfile(petId: String, controller: NavController) {
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(8.dp)
         )
         OutlinedTextField(
             value = gender,
@@ -115,7 +116,7 @@ fun PetProfile(petId: String, controller: NavController) {
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(8.dp)
         )
         OutlinedTextField(
             value = age,
@@ -128,13 +129,13 @@ fun PetProfile(petId: String, controller: NavController) {
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(8.dp)
         )
         OutlinedTextField(
             value = description,
             onValueChange = { description = it },
             label = { Text("Описание") },
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier.fillMaxWidth().padding(8.dp)
                 )
                 Button(colors = ButtonDefaults.buttonColors(backgroundColor = Bisque4), elevation = ButtonDefaults.elevation(defaultElevation = 8.dp, pressedElevation = 16.dp),
                     onClick = {
@@ -153,7 +154,7 @@ fun PetProfile(petId: String, controller: NavController) {
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(text = "Сохранить изменения", color = Color.White) }
-                Button(colors = ButtonDefaults.buttonColors(backgroundColor = Bisque4), elevation = ButtonDefaults.elevation(defaultElevation = 8.dp, pressedElevation = 16.dp), onClick = { petRef.delete().addOnCompleteListener{
+                Button(colors = ButtonDefaults.buttonColors(backgroundColor = RedButton), elevation = ButtonDefaults.elevation(defaultElevation = 8.dp, pressedElevation = 16.dp), onClick = { petRef.delete().addOnCompleteListener{
                     task -> if(task.isSuccessful){
                         controller.navigate(NavScreens.PetsScreen.route)
                 } else {

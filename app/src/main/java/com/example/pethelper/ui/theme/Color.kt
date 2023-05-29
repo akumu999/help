@@ -10,5 +10,7 @@ val Bisque1 = Color(255,228,196)
 val Bisque2 = Color(238, 213, 183)
 val Bisque3 = Color(205, 183, 158)
 val Bisque4 = Color(139, 125, 107)
+val GreenButton = Color(76, 175, 80, 255)
+val RedButton = Color(177, 41, 41, 255)
 
 

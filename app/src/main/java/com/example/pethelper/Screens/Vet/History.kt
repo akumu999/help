@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.pethelper.ui.theme.Bisque2
 import com.google.firebase.firestore.FirebaseFirestore
@@ -38,7 +39,8 @@ fun History(controller: NavController) {
         Text(
             text = "История заявок",
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(16.dp),
+            fontSize = 20.sp
         )
 
         // Отображаем список принятых и отклоненных заявок в Card

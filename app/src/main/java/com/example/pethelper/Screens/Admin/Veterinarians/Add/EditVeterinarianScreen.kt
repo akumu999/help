@@ -11,8 +11,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.pethelper.Navigation.NavScreens
+import com.example.pethelper.Screens.Admin.Products.VeterinariansViewModel
 import com.example.pethelper.ui.theme.Bisque2
 import com.example.pethelper.ui.theme.Bisque4
 import com.google.firebase.firestore.FirebaseFirestore
@@ -21,7 +23,7 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
 @Composable
-fun EditVeterinarianScreen(veterinarianID: String, controller: NavController) {
+fun EditVeterinarianScreen(veterinarianID: String, controller: NavController, viewModel: VeterinariansViewModel = viewModel()) {
     val db = Firebase.firestore
     val veterinarianRef = db.collection("veterinarians").document(veterinarianID)
 
@@ -131,6 +133,7 @@ fun EditVeterinarianScreen(veterinarianID: String, controller: NavController) {
                 )
                 veterinarianRef.set(veterinarianData)
                 controller.navigate(NavScreens.VeterinariansAdmin.route)
+                viewModel.fetchVeterinarians()
             },
             modifier = Modifier.fillMaxWidth()
         ) {

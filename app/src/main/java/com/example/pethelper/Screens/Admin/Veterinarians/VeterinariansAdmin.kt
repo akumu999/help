@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,6 +26,12 @@ import com.example.pethelper.ui.theme.Bisque4
 @Composable
 fun VeterinariansAdmin(controller: NavController, viewModel: VeterinariansViewModel = viewModel()) {
     val veterinarians = viewModel.veterinariansList.value.orEmpty()
+
+    // Fetch the veterinarians list when the composable is first displayed
+    LaunchedEffect(true) {
+        viewModel.fetchVeterinarians()
+    }
+
     Column(modifier = Modifier.background(Bisque2).fillMaxSize()) {
         Text(
             text = "Список ветеринаров",
@@ -64,6 +71,7 @@ fun VeterinariansAdmin(controller: NavController, viewModel: VeterinariansViewMo
     }
 }
 
+
 @Composable
 fun VeterinariansItem(veterinarians: Veterinarians, onDeleteClick: () -> Unit, onEditClick: () -> Unit) {
     Card(
@@ -82,7 +90,7 @@ fun VeterinariansItem(veterinarians: Veterinarians, onDeleteClick: () -> Unit, o
                 Text(text = "Опыт работы:\n"+veterinarians.work_experience+ "\n")
             }
             IconButton(
-                onClick = { onEditClick() },
+                onClick = onEditClick,
                 modifier = Modifier.padding(end = 8.dp)
             ) {
                 Icon(

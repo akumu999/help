@@ -17,21 +17,21 @@ data class Veterinarian(
     val work_experience: String
 )
 
-class ProductsViewModel : ViewModel() {
-    private val _productsList = MutableLiveData<List<Veterinarian>>()
-    val productsList: LiveData<List<Veterinarian>> = _productsList
+class VeterinariansViewModel : ViewModel() {
+    private val _veterinariansList = MutableLiveData<List<Veterinarian>>()
+    val productsList: LiveData<List<Veterinarian>> = _veterinariansList
 
     private val firestore: FirebaseFirestore = Firebase.firestore
 
     init {
-        fetchProducts()
+        fetchVeterinarians()
     }
 
-    private fun fetchProducts() {
-        firestore.collection("products")
+    private fun fetchVeterinarians() {
+        firestore.collection("veterinarians")
             .get()
             .addOnSuccessListener { querySnapshot ->
-                val products = mutableListOf<Veterinarian>()
+                val veterinarians = mutableListOf<Veterinarian>()
                 for (document in querySnapshot) {
                     val id = document.id
                     val name = document.getString("name") ?: ""
@@ -40,9 +40,9 @@ class ProductsViewModel : ViewModel() {
                     val education = document.getString("education") ?: ""
                     val speciality = document.getString("speciality") ?: ""
                     val work_experience = document.getString("work_experience") ?: ""
-                    products.add(Veterinarian(id, name, surname, midname, education, speciality, work_experience))
+                    veterinarians.add(Veterinarian(id, name, surname, midname, education, speciality, work_experience))
                 }
-                _productsList.value = products
+                _veterinariansList.value = veterinarians
             }
             .addOnFailureListener { exception ->
                 // Handle error

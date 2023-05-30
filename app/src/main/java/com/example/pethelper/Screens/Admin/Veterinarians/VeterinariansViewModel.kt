@@ -28,7 +28,7 @@ class VeterinariansViewModel : ViewModel() {
         fetchVeterinarians()
     }
 
-    private fun fetchVeterinarians() {
+     fun fetchVeterinarians() {
         firestore.collection("veterinarians")
             .get()
             .addOnSuccessListener { querySnapshot ->
@@ -45,9 +45,10 @@ class VeterinariansViewModel : ViewModel() {
                     veterinarians.add(Veterinarians(id, name, surname, midname, education, speciality, work_experience))
                 }
                 _veterinariansList.value = veterinarians
+                fetchVeterinarians()
             }
             .addOnFailureListener { exception ->
-                // Handle error
+                fetchVeterinarians()
             }
     }
 
@@ -59,9 +60,10 @@ class VeterinariansViewModel : ViewModel() {
                 val updatedList = _veterinariansList.value?.toMutableList()
                 updatedList?.remove(veterinarians)
                 _veterinariansList.value = updatedList
+                fetchVeterinarians()
             }
             .addOnFailureListener { exception ->
-                // Обработка ошибки при удалении
+                fetchVeterinarians()
             }
     }
 }

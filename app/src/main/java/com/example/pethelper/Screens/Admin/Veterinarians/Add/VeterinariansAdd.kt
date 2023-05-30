@@ -114,11 +114,12 @@ fun VeterinariansAdd(navController: NavController, viewModel: VeterinariansViewM
                 // Add the product to Firestore
                 veterinarianCollection.add(veterinarian)
                     .addOnSuccessListener {
+                        viewModel.fetchVeterinarians()
                         navController.popBackStack()
 
                     }
                     .addOnFailureListener { exception ->
-                        // Handle failure
+                        viewModel.fetchVeterinarians()
                     }
             },
             modifier = Modifier.fillMaxWidth(),

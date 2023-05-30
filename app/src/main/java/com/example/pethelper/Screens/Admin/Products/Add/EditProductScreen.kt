@@ -10,8 +10,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.pethelper.Navigation.NavScreens
+import com.example.pethelper.Screens.Admin.Products.ProductsViewModel
 import com.example.pethelper.ui.theme.Bisque2
 import com.example.pethelper.ui.theme.Bisque4
 import com.google.firebase.auth.FirebaseAuth
@@ -22,7 +24,7 @@ import kotlinx.coroutines.tasks.await
 
 
 @Composable
-fun EditProductScreen(productId: String, controller: NavController) {
+fun EditProductScreen(productId: String, controller: NavController, viewModel: ProductsViewModel = viewModel()) {
     val db = Firebase.firestore
     val productRef = db.collection("products").document(productId)
 
@@ -80,6 +82,7 @@ fun EditProductScreen(productId: String, controller: NavController) {
                 )
                 productRef.set(productData)
                 controller.navigate(NavScreens.ProductsAdmin.route)
+                viewModel.fetchProducts()
             },
             modifier = Modifier.fillMaxWidth()
         ) {

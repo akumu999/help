@@ -23,7 +23,7 @@ class ProductsViewModel : ViewModel() {
         fetchProducts()
     }
 
-    private fun fetchProducts() {
+     fun fetchProducts() {
         firestore.collection("products")
             .get()
             .addOnSuccessListener { querySnapshot ->
@@ -50,9 +50,10 @@ class ProductsViewModel : ViewModel() {
                 val updatedList = _productsList.value?.toMutableList()
                 updatedList?.remove(product)
                 _productsList.value = updatedList
+               fetchProducts()
             }
             .addOnFailureListener { exception ->
-                // Обработка ошибки при удалении
+                fetchProducts()
             }
     }
 }

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -60,11 +61,11 @@ fun ProductsAdd(navController: NavController, viewModel: ProductsViewModel = vie
                 // Add the product to Firestore
                 productsCollection.add(product)
                     .addOnSuccessListener {
-                        // Successfully added
+                        viewModel.fetchProducts()
                         navController.popBackStack()
                     }
                     .addOnFailureListener { exception ->
-                        // Handle failure
+                        viewModel.fetchProducts()
                     }
             },
             modifier = Modifier.fillMaxWidth(),

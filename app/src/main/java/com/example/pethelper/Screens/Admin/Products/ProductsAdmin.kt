@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -27,6 +28,10 @@ import com.example.pethelper.ui.theme.Bisque4
 @Composable
 fun ProductsAdmin(controller: NavController, viewModel: ProductsViewModel = viewModel()) {
     val products = viewModel.productsList.value.orEmpty()
+
+    LaunchedEffect(true) {
+        viewModel.fetchProducts()
+    }
 
     Column(modifier = Modifier.background(Bisque2).fillMaxSize()) {
         Text(
@@ -60,7 +65,7 @@ fun ProductsAdmin(controller: NavController, viewModel: ProductsViewModel = view
                 ProductsItem(
                     product = product,
                     onDeleteClick = { viewModel.deleteProduct(product) },
-                    onEditClick = { controller.navigate("${NavScreens.EditProductScreen.route}/${product.id}") }
+                    onEditClick2 = { controller.navigate("${NavScreens.EditProductScreen.route}/${product.id}") }
                 )
             }
         }
@@ -68,7 +73,7 @@ fun ProductsAdmin(controller: NavController, viewModel: ProductsViewModel = view
 }
 
 @Composable
-fun ProductsItem(product: Products, onDeleteClick: () -> Unit, onEditClick: () -> Unit) {
+fun ProductsItem(product: Products, onDeleteClick: () -> Unit, onEditClick2: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -82,7 +87,7 @@ fun ProductsItem(product: Products, onDeleteClick: () -> Unit, onEditClick: () -
                 Text(text = product.name, style = MaterialTheme.typography.h6)
             }
             IconButton(
-                onClick = { onEditClick() },
+                onClick = { onEditClick2() },
                 modifier = Modifier.padding(end = 8.dp)
             ) {
                 Icon(

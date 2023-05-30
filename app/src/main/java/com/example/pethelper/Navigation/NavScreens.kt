@@ -22,6 +22,6 @@ sealed class NavScreens (val route: String){
     object VScreen : NavScreens("VScreen")
     object DoctorPost : NavScreens("DoctorPost")
     object EditProductScreen : NavScreens("EditProductScreen")
-    object EditVeterinarianScreen : NavScreens("EditProductScreen")
+    object EditVeterinarianScreen : NavScreens("EditVeterinarianScreen")
     object History : NavScreens("History")
 }

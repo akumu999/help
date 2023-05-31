@@ -1,9 +1,11 @@
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.pethelper.Navigation.NavScreens
@@ -67,19 +69,13 @@ fun DoctorPost(controller: NavController) {
             label = { Text("Жалобы") },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp)
         )
         OutlinedTextField(
             value = phone,
-            onValueChange = { newValue ->
-                if (newValue.matches(Regex("^\\+?[1-9]\\d{0,2}[-.\\s]?\\(?\\d{3}\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{4}$"))) {
-                    phone = newValue
-                }
-            },
-            label = { Text("Ваш номер телефона") },
+            onValueChange = { phone = it },
+            label = { Text("Номер телефона") },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp)
         )
 
         Button( colors = ButtonDefaults.buttonColors(backgroundColor = Bisque4), elevation = ButtonDefaults.elevation(defaultElevation = 8.dp, pressedElevation = 16.dp),

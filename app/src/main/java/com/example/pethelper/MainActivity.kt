@@ -91,10 +91,6 @@ fun RootScreen(context: Context){
         else -> false
     }
     showTopBar = when (navBackStackEntry?.destination?.route){
-        /*NavScreens.DoctorScreen.route,*/
-       /* NavScreens.CatalogScreen.route,*/
-        /*NavScreens.PetsScreen.route,*/
-        /*NavScreens.ProfileScreen.route*/ /*-> true*/
         else -> false
     }
     Scaffold(

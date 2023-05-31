@@ -1,4 +1,6 @@
 import Post
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,7 +30,7 @@ import com.example.pethelper.ui.theme.GreenButton
 import com.example.pethelper.ui.theme.RedButton
 
 @Composable
-fun VScreen(controller: NavController) {
+fun VScreen(controller: NavController, context: Context) {
     val db = FirebaseFirestore.getInstance()
     var historyPosts by remember { mutableStateOf<List<Post>>(emptyList()) }
 
@@ -109,14 +111,14 @@ fun VScreen(controller: NavController) {
                             } else {
                                 // Заявка не обработана, отображаем кнопки принятия и отклонения
                                 Button(colors = ButtonDefaults.buttonColors(backgroundColor = GreenButton), elevation = ButtonDefaults.elevation(defaultElevation = 8.dp, pressedElevation = 16.dp),
-                                    onClick = { acceptPost(post) },
+                                    onClick = { acceptPost(post, context) },
                                     modifier = Modifier.fillMaxWidth()
                                 ) {
                                     Text(text = "Принять", color = Color.White)
                                 }
 
                                 Button(colors = ButtonDefaults.buttonColors(backgroundColor = RedButton), elevation = ButtonDefaults.elevation(defaultElevation = 8.dp, pressedElevation = 16.dp),
-                                    onClick = { declinePost(post) },
+                                    onClick = { declinePost(post, context) },
                                     modifier = Modifier.fillMaxWidth()
                                 ) {
                                     Text(text = "Отклонить", color = Color.White)
@@ -130,10 +132,10 @@ fun VScreen(controller: NavController) {
     }
 }
 // Обработка принятия заявки
-fun acceptPost(post: Post) {
+fun acceptPost(post: Post, context: Context) {
     // Здесь вы можете добавить код для обновления статуса поста или выполнения других действий,
     // например, отправка уведомления пользователю о принятии его заявки.
-
+Toast.makeText(context, "Заявка принята", Toast.LENGTH_SHORT)
     // Пример обновления статуса поста на "Принята"
     post.status = "Принята"
 
@@ -144,10 +146,10 @@ fun acceptPost(post: Post) {
 }
 
 // Обработка отклонения заявки
-fun declinePost(post: Post) {
+fun declinePost(post: Post, context: Context) {
     // Здесь вы можете добавить код для обновления статуса поста или выполнения других действий,
     // например, отправка уведомления пользователю о отклонении его заявки.
-
+    Toast.makeText(context, "Заявка отклонена", Toast.LENGTH_SHORT)
     // Пример обновления статуса поста на "Отклонена"
     post.status = "Отклонена"
 

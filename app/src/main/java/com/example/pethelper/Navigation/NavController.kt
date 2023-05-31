@@ -85,7 +85,7 @@ fun SetNavController(controller: NavHostController, context : Context) {
             VeterinariansAdd(controller)
         }
         composable(NavScreens.VScreen.route) {
-            VScreen(controller)
+            VScreen(controller, context)
         }
         composable(NavScreens.DoctorPost.route) {
             DoctorPost(controller)

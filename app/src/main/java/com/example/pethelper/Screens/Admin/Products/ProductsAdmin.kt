@@ -85,6 +85,7 @@ fun ProductsItem(product: Products, onDeleteClick: () -> Unit, onEditClick2: () 
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(text = product.name, style = MaterialTheme.typography.h6)
+                Text(text = product.cost)
             }
             IconButton(
                 onClick = { onEditClick2() },

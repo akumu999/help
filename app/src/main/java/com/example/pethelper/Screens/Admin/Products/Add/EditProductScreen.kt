@@ -65,9 +65,12 @@ fun EditProductScreen(productId: String, controller: NavController, viewModel: P
         OutlinedTextField(
             value = cost,
             onValueChange = { newValue ->
-                cost = newValue
+                if (newValue.all { it.isDigit() }) {
+                    cost = newValue
+                }
             },
-            label = { Text(text = "Цена") },
+            label = { Text(text = "Возраст") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)

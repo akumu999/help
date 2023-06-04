@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -129,15 +130,24 @@ fun PetsScreen(controller: NavController) {
             items(filtredPets) { pet ->
                 Card(
                     modifier = Modifier.fillMaxSize().padding(vertical = 8.dp, horizontal = 16.dp)
-                        .clickable { controller.navigate(NavScreens.PetProfile.route + "/${pet.id}") }
-                )
-                        {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth().padding(vertical = 16.dp, horizontal = 16.dp)
-
-                    ) {
-                        Text(text = pet.name, fontWeight = FontWeight.Bold)
+                        .clickable { controller.navigate(NavScreens.PetPassport.route + "/${pet.id}") }
+                ) {
+                    Column(modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp, horizontal = 16.dp)) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(text = pet.name, fontWeight = FontWeight.Bold)
+                            IconButton(
+                                onClick = { controller.navigate(NavScreens.PetProfile.route + "/${pet.id}") }
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Edit,
+                                    contentDescription = "Edit"
+                                )
+                            }
+                        }
                         Text(text = pet.type)
                     }
                 }

@@ -4,6 +4,7 @@ import DoctorPost
 import EditProductScreen
 import History
 import Pet
+import PetPassport
 import PetProfile
 import PetsAddScreen
 import Post
@@ -12,6 +13,7 @@ import VScreen
 import VeterinariansAdmin
 import android.content.Context
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -55,6 +57,9 @@ fun SetNavController(controller: NavHostController, context : Context) {
 
         composable(NavScreens.PetProfile.route + "/{pet.id}") { backStackEntry ->
             PetProfile(petId = backStackEntry.arguments?.getString("pet.id") ?: "", controller = controller)
+        }
+        composable(NavScreens.PetPassport.route + "/{pet.id}") { backStackEntry ->
+            PetPassport(petId = backStackEntry.arguments?.getString("pet.id") ?: "", controller = controller)
         }
 
         composable(NavScreens.PetsAddScreen.route) {

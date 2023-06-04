@@ -13,6 +13,7 @@ sealed class NavScreens (val route: String){
     object ProfileScreen : NavScreens("ProfileScreen")
     object ProfileEditScreen : NavScreens("EditProfile")
     object PetProfile : NavScreens("PetProfile")
+    object PetPassport : NavScreens("PetPassport")
     object ProductInfo : NavScreens("ProductInfo")
     object AdminMainScreen : NavScreens("AdminMainScreen")
     object ProductsAdmin : NavScreens("ProductsAdmin")

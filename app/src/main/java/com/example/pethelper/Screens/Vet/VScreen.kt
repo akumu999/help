@@ -2,11 +2,7 @@ import Post
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
@@ -16,18 +12,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Green
 import androidx.compose.ui.graphics.Color.Companion.Red
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.pethelper.Navigation.NavScreens
+import com.example.pethelper.R
+import com.example.pethelper.ui.theme.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObjects
 import kotlinx.coroutines.tasks.await
-import com.example.pethelper.ui.theme.Bisque2
-import com.example.pethelper.ui.theme.Bisque4
-import com.example.pethelper.ui.theme.GreenButton
-import com.example.pethelper.ui.theme.RedButton
 
 @Composable
 fun VScreen(controller: NavController, context: Context) {
@@ -51,6 +47,14 @@ fun VScreen(controller: NavController, context: Context) {
         }
     }
 
+    var searchQuery by remember { mutableStateOf("") }
+
+    // Отфильтрованный список товаров
+    val filterPosts= if (searchQuery.isEmpty()) {
+        posts
+    } else {
+        posts.filter { it.petName.contains(searchQuery, ignoreCase = true) }
+    }
 
     // Фильтруем список заявок, оставляя только необработанные
     val unprocessedPosts = posts.filter { post ->
@@ -64,7 +68,37 @@ fun VScreen(controller: NavController, context: Context) {
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(16.dp).align(Alignment.CenterHorizontally)
         )
-
+        TopAppBar(
+            title = { Text(text = "PETHELPER", textAlign = TextAlign.Center) },
+            backgroundColor = Bisque1,
+            elevation = 8.dp,
+            actions = {
+                // TextField для поиска
+                TextField(
+                    value = searchQuery,
+                    onValueChange = { searchQuery = it },
+                    modifier = Modifier
+                        .padding(end = 16.dp)
+                        .fillMaxWidth()
+                        .size(60.dp),
+                    placeholder = { Text(text = "Поиск") },
+                    colors = TextFieldDefaults.textFieldColors(
+                        backgroundColor = Bisque1,
+                        cursorColor = Color.Black,
+                        focusedIndicatorColor = Bisque1,
+                        unfocusedIndicatorColor = Bisque1,
+                        focusedLabelColor = Color.Black,
+                        unfocusedLabelColor = Color.Black
+                    ),
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(id = R.drawable.search),
+                            contentDescription = "Search"
+                        )
+                    }
+                )
+            }
+        )
         // Кнопка "История заявок"
         Button(colors = ButtonDefaults.buttonColors(backgroundColor = Bisque4), elevation = ButtonDefaults.elevation(defaultElevation = 8.dp, pressedElevation = 16.dp),
             onClick = { controller.navigate(NavScreens.History.route) },
@@ -77,7 +111,7 @@ fun VScreen(controller: NavController, context: Context) {
 
         // Отображаем список необработанных постов в LazyColumn
         LazyColumn(modifier = Modifier.fillMaxSize()) {
-            items(unprocessedPosts) { post ->
+            items(filterPosts) { post ->
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()

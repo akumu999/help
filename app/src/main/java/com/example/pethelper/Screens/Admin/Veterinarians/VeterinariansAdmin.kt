@@ -7,18 +7,21 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pethelper.Navigation.NavScreens
+import com.example.pethelper.R
 import com.example.pethelper.Screens.Admin.Products.Veterinarians
 import com.example.pethelper.Screens.Admin.Products.VeterinariansViewModel
+import com.example.pethelper.ui.theme.Bisque1
 import com.example.pethelper.ui.theme.Bisque2
 import com.example.pethelper.ui.theme.Bisque4
 
@@ -32,6 +35,15 @@ fun VeterinariansAdmin(controller: NavController, viewModel: VeterinariansViewMo
         viewModel.fetchVeterinarians()
     }
 
+    var searchQuery by remember { mutableStateOf("") }
+
+    // Отфильтрованный список товаров
+    val filteredVeterinarian= if (searchQuery.isEmpty()) {
+        veterinarians
+    } else {
+        veterinarians.filter { it.name.contains(searchQuery, ignoreCase = true) }
+    }
+
     Column(modifier = Modifier.background(Bisque2).fillMaxSize()) {
         Text(
             text = "Список ветеринаров",
@@ -40,7 +52,37 @@ fun VeterinariansAdmin(controller: NavController, viewModel: VeterinariansViewMo
             modifier = Modifier.padding(16.dp),
             color = Color.Black
         )
-
+        TopAppBar(
+            title = { Text(text = "PETHELPER", textAlign = TextAlign.Center) },
+            backgroundColor = Bisque1,
+            elevation = 8.dp,
+            actions = {
+                // TextField для поиска
+                TextField(
+                    value = searchQuery,
+                    onValueChange = { searchQuery = it },
+                    modifier = Modifier
+                        .padding(end = 16.dp)
+                        .fillMaxWidth()
+                        .size(60.dp),
+                    placeholder = { Text(text = "Поиск") },
+                    colors = TextFieldDefaults.textFieldColors(
+                        backgroundColor = Bisque1,
+                        cursorColor = Color.Black,
+                        focusedIndicatorColor = Bisque1,
+                        unfocusedIndicatorColor = Bisque1,
+                        focusedLabelColor = Color.Black,
+                        unfocusedLabelColor = Color.Black
+                    ),
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(id = R.drawable.search),
+                            contentDescription = "Search"
+                        )
+                    }
+                )
+            }
+        )
         Button(
             onClick = { controller.navigate(NavScreens.VeterinariansAdd.route) },
             modifier = Modifier
@@ -60,10 +102,9 @@ fun VeterinariansAdmin(controller: NavController, viewModel: VeterinariansViewMo
         }
 
         LazyColumn(modifier = Modifier.fillMaxSize()) {
-            items(veterinarians) { veterinarian ->
+            items(filteredVeterinarian) { veterinarian ->
                 VeterinariansItem(
                     veterinarians = veterinarian,
-                    onDeleteClick = { viewModel.deleteVeterinarian(veterinarian) },
                     onEditClick = { controller.navigate("${NavScreens.EditVeterinarianScreen.route}/${veterinarian.id}") }
                 )
             }
@@ -73,7 +114,7 @@ fun VeterinariansAdmin(controller: NavController, viewModel: VeterinariansViewMo
 
 
 @Composable
-fun VeterinariansItem(veterinarians: Veterinarians, onDeleteClick: () -> Unit, onEditClick: () -> Unit) {
+fun VeterinariansItem(veterinarians: Veterinarians, onEditClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -96,16 +137,6 @@ fun VeterinariansItem(veterinarians: Veterinarians, onDeleteClick: () -> Unit, o
                 Icon(
                     imageVector = Icons.Default.Edit,
                     contentDescription = "Edit Veterinarian",
-                    tint = Color.Black
-                )
-            }
-            IconButton(
-                onClick = onDeleteClick,
-                modifier = Modifier.padding(end = 8.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Delete,
-                    contentDescription = "Delete Veterinarian",
                     tint = Color.Black
                 )
             }

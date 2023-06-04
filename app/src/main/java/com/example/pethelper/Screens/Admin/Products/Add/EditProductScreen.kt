@@ -7,6 +7,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -90,6 +91,18 @@ fun EditProductScreen(productId: String, controller: NavController, viewModel: P
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(text = "Сохранить изменения", color = Color.White)
+        }
+        Button(
+            colors = ButtonDefaults.buttonColors(backgroundColor = Bisque4),
+            elevation = ButtonDefaults.elevation(defaultElevation = 8.dp, pressedElevation = 16.dp),
+            onClick = {
+                productRef.delete()
+                controller.navigate(NavScreens.ProductsAdmin.route)
+                viewModel.fetchProducts()
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(text = "Удалить услугу", color = Color.White)
         }
     }
 }

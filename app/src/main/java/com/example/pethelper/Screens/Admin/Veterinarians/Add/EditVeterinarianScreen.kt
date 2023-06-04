@@ -139,5 +139,16 @@ fun EditVeterinarianScreen(veterinarianID: String, controller: NavController, vi
         ) {
             Text(text = "Сохранить изменения", color = Color.White)
         }
+        Button(
+            colors = ButtonDefaults.buttonColors(backgroundColor = Bisque4),
+            onClick = {
+                veterinarianRef.delete()
+                controller.navigate(NavScreens.VeterinariansAdmin.route)
+                viewModel.fetchVeterinarians()
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(text = "Удалить ветеринара", color = Color.White)
+        }
     }
 }
